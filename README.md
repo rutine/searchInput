@@ -1,4 +1,4 @@
-## LayUI - searchInput 组件
+## Layui - searchInput 组件
 
 
 ### 简介
