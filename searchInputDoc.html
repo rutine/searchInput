@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="renderer" content="webkit">
+
+  <!-- 运行sample时，请根据实际的layui库所处位置修改链接地址 -->
+  <link rel="stylesheet" href="https://unpkg.com/layui@2.9.14/dist/css/layui.css">
+  <link rel="stylesheet" href="doc.css">
+  <link rel="stylesheet" href="./searchInput.css">
+  <title>searchInput</title>
+</head>
+<body>
+<div class="doc-layout">
+  <div class="doc-side">
+    <h1>SearchInput</h1>
+    <h2>文档目录</h2>
+    <ul>
+      <li><a href="#demo1" title="演示">演示</a></li>
+      <li><a href="#parm" title="核心方法和参数">核心方法和参数</a></li>
+      <li><a href="#uplog" title="更新日志">更新日志</a></li>
+    </ul>
+    <h2>AUTHOR</h2>
+    <ul>
+      <li><a href="###">@rutine</a></li>
+    </ul>
+  </div>
+
+  <div class="doc-content" id="doc-content">
+    <div class="layui-main">
+      <h1 class="doc-h1">Layui - SearchInput</h1>
+      <div class="layui-text">
+        SearchInput标签文本搜索框组件，输入搜索内容后，通过下拉选择要参与过滤的字段
+      </div>
+
+      <fieldset class="layui-elem-field layui-field-title" id="demo1"><legend>演示</legend></fieldset>
+      <div class="layui-text">
+        <p>创建一个SearchInput实例</p>
+      </div>
+      <div class="search-tag-container">
+        <input type="text" class="search-tag-input" autocomplete="off" value="">
+      </div>
+
+      <div id="ID_tag"></div>
+
+      <fieldset class="layui-elem-field layui-field-title" id="parm"><legend>核心方法和参数</legend></fieldset>
+      <div class="layui-text">
+        <p>searchInput最核心的一个方法就是 <em>searchInput.render(options)</em></p>
+      </div>
+      <pre class="layui-code" lay-encode="true">
+      //1、加载CSS
+      <link rel="stylesheet" href="searchInput.css">
+
+      //2、定义layui组件 得到 searchInput 对象
+      var searchInput = layui.searchInput;
+
+      //3、定义一个 searchInput 挂载到 input文本框
+      var searchInst = searchInput.render({
+        elem: '.search-tag-input', //input选择器
+        title: '请选择查询字段',  //文本框提示内容
+        data: [//过滤字段配置
+          {field: 'name', name: '名称'},
+          {field: 'phone', name: '手机'}
+        ],
+        keyNum: {
+          remove: 8, //删除按键编号 默认，BackSpace 键
+          create: 13 //创建按键编号 默认，Enter 键
+        },
+        beforeCreate: function (data, value) {//选择标签前操作，必须返回字符串才有效
+          console.log('beforeCreate', arguments);
+          return value;
+        },
+        onChange: function (data, value, type) { //改变文本框值事件
+          console.log('onChange', arguments);
+          $('#ID_tag').text(JSON.stringify(data));
+        }
+      });
+      </pre>
+      <div class="layui-text">
+        <p>options参数说明</p>
+      </div>
+      <table class="layui-table">
+        <colgroup>
+          <col width="120">
+          <col>
+          <col width="120">
+          <col width="200">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>参数选项</th>
+          <th>说明</th>
+          <th>类型</th>
+          <th>示例值</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>elem</td>
+          <td>指定input文本框容器的选择器。</td>
+          <td>string</td>
+          <td>".search-tag-input"</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td class="layui-text">文本框提示内容</td>
+          <td>string</td>
+          <td>"文本框提示内容"</td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td>过滤字段请求参数配置</td>
+          <td>Array</td>
+          <td>[{field: 'name', name: '名称'}]</td>
+        </tr>
+        <tr>
+          <td>keyNum</td>
+          <td>按键监听, 仅支持删除'remove'和'create'确定事件</td>
+          <td>int</td>
+          <td>"{remove: 8, create: 13}"</td>
+        </tr>
+        <tr>
+          <td>beforeCreate</td>
+          <td>选择标签前操作</td>
+          <td>function</td>
+          <td>"data=配置字段, value=文本框输入内容"</td>
+        </tr>
+        <tr>
+          <td>onChange</td>
+          <td>文本框值变更事件</td>
+          <td>function</td>
+          <td>"data=配置字段, value=文本框输入内容, type=按键事件"</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <fieldset class="layui-elem-field layui-field-title" id="uplog"><legend>更新日志</legend></fieldset>
+      <ul class="layui-timeline">
+        <li class="layui-timeline-item">
+          <i class="layui-icon layui-timeline-axis"></i>
+          <div class="layui-timeline-content layui-text">
+            <div class="layui-timeline-title">2029/04/17 ADD 日期类型，UP 更新序号</div>
+          </div>
+        </li>
+        <li class="layui-timeline-item">
+          <i class="layui-icon layui-timeline-axis"></i>
+          <div class="layui-timeline-content layui-text">
+            <div class="layui-timeline-title">2024/08/10 完成功能SearchInput开发</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- 运行sample时，请根据实际的layui库所处位置修改链接地址 -->
+<script src="https://unpkg.com/layui@2.9.14/dist/layui.js"></script>
+<script type="text/javascript">
+  layui.config({
+    base: '',
+  });
+
+  layui.use(['code', 'searchInput'], function(){
+    layui.code();
+    var $ = layui.$,
+      searchInput = layui.searchInput;
+
+    var searchInst = searchInput.render({
+      elem: '.search-tag-input',
+      title: '请选择查询字段',
+      data: [//初始值
+        {field: 'name', name: '名称'},
+        {field: 'phone', name: '手机'},
+        {field: 'sex', name: '性别'},
+        {field: 'address', name: '地址'}
+      ],
+      keyNum: {
+        remove: 8, //删除按键编号 默认，BackSpace 键
+        create: 13 //创建按键编号 默认，Enter 键
+      },
+      beforeCreate: function (data, value) {//选择标签前操作，必须返回字符串才有效
+        console.log('beforeCreate', arguments);
+        return value;
+      },
+      onChange: function (data, value, type) {
+        console.log('onChange', arguments);
+        $('#ID_tag').text(JSON.stringify(value));
+      }
+    });
+
+    // //获取数据方法
+    // searchInst.clearTag();
+
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+.project
+/.settings
+/node_modules
+/logs
+npm-debug.log
+/dist
+target/
+.idea/
+*.iml
